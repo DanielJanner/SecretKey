@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #dbe3ee;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success-bg: #ecfdf3;
+      --success-text: #166534;
+      --error-bg: #fef2f2;
+      --error-text: #991b1b;
+      --info-bg: #eff6ff;
+      --info-text: #1d4ed8;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, #e8f0ff 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #eefbf5 0%, transparent 30%),
+        var(--bg);
+      color: var(--text);
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .header {
+      text-align: center;
+      padding-top: 28px;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .logo img {
+      width: 220px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .user-info {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .user-info strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-size: 18px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #fff;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    button {
+      height: 44px;
+      border: none;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0 16px;
+      transition: background 0.2s, transform 0.04s;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    button.secondary:hover {
+      background: #f8fafc;
+    }
+
+    .message {
+      display: none;
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .message.success {
+      display: block;
+      background: var(--success-bg);
+      color: var(--success-text);
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      display: block;
+      background: var(--error-bg);
+      color: var(--error-text);
+      border: 1px solid #fecaca;
+    }
+
+    .message.info {
+      display: block;
+      background: var(--info-bg);
+      color: var(--info-text);
+      border: 1px solid #bfdbfe;
+    }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .collapse-content {
+      margin-top: 18px;
+      display: none;
+    }
+
+    .collapse-content.open {
+      display: block;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .devices-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .device-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: #fbfdff;
+    }
+
+    .device-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .device-col {
+      min-width: 130px;
+    }
+
+    .device-col span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    .device-col strong {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .secret-col {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .secret-inline-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .secret-value {
+      font-family: Consolas, monospace;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      flex: 1;
+      min-width: 0;
+      word-break: break-all;
+    }
+
+    .eye-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: auto;
+      min-width: auto;
+    }
+
+    .eye-btn img {
+      width: 18px;
+      height: 18px;
+      opacity: 0.72;
+      transition: opacity 0.2s, transform 0.1s;
+      display: block;
+    }
+
+    .eye-btn:hover img {
+      opacity: 1;
+    }
+
+    .eye-btn:active img {
+      transform: scale(0.95);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: bold;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    .status-badge.active {
+      background: #ecfdf3;
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+
+    .status-badge.inactive {
+      background: #fef2f2;
+      color: #991b1b;
+      border-color: #fecaca;
+    }
+
+    .empty-state {
+      padding: 22px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      background: #fcfdff;
+    }
+
+    @media (max-width: 720px) {
+      .field-grid,
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .device-row {
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .device-col,
+      .secret-col {
+        min-width: 100%;
+      }
+
+      .secret-inline-box {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card header">
+      <div class="logo">
+        <img src="img/SigNow.png" alt="SigNow" />
+      </div>
+      <h1>Dashboard de Devices</h1>
+      <p class="subtitle">
+        Visualize sua sessão, gerencie seus devices e consulte as chaves secretas.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="topbar">
+        <div class="user-info">
+          <strong id="user-email">Carregando usuário...</strong>
+          <div>Sessão autenticada</div>
+        </div>
+        <button id="logout" class="secondary">Sair</button>
+      </div>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div class="card">
+      <div class="toggle-row">
+        <h2 class="section-title" style="margin:0;">Adicionar novo device</h2>
+        <button id="toggle-add-device" class="secondary">Expandir</button>
+      </div>
+
+      <div id="add-device-panel" class="collapse-content">
+        <div class="field-grid">
+          <div class="field">
+            <label for="serial">Número de série</label>
+            <input id="serial" placeholder="Ex.: TL400-0001" />
+          </div>
+
+          <div class="field">
+            <label for="model">Modelo</label>
+            <input id="model" placeholder="Ex.: TL400" />
+          </div>
+
+          <div class="field full">
+            <label for="name">Nome do device</label>
+            <input id="name" placeholder="Ex.: Tanque principal" />
+          </div>
+
+          <div class="field full">
+            <label for="secret">Chave secreta do device</label>
+            <input id="secret" placeholder="Informe a chave secreta" />
+          </div>
+        </div>
+
+        <button id="add-device">Salvar device</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Meus devices</h2>
+
+      <div class="filters">
+        <div class="field">
+          <label for="filter-serial">Filtrar por número de série</label>
+          <input id="filter-serial" placeholder="Digite parte do serial" />
+        </div>
+
+        <div class="field">
+          <label for="filter-model">Filtrar por modelo</label>
+          <input id="filter-model" placeholder="Digite o modelo" />
+        </div>
+      </div>
+
+      <div id="devices" class="devices-list"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const SUPABASE_URL = 'https://ceewgklatdsnzifgjcmk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable__Jeuo_3E3hNHFVyzdm2XdQ_zYjENdsc';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let devicesCache = [];
+    let revealedSecrets = new Set();
+
+    const userEmailEl = document.getElementById('user-email');
+    const messageEl = document.getElementById('message');
+    const devicesEl = document.getElementById('devices');
+    const toggleAddDeviceBtn = document.getElementById('toggle-add-device');
+    const addDevicePanel = document.getElementById('add-device-panel');
+
+    function showMessage(type, text) {
+      messageEl.className = `message ${type}`;
+      messageEl.textContent = text;
+    }
+
+    function clearMessage() {
+      messageEl.className = 'message';
+      messageEl.textContent = '';
+    }
+
+    function maskSecret(secret) {
+      if (!secret) return '-';
+      if (secret.length <= 4) return '****';
+      return '*'.repeat(Math.max(secret.length - 4, 8)) + secret.slice(-4);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function renderDevices() {
+      const serialFilter = document.getElementById('filter-serial').value.trim().toLowerCase();
+      const modelFilter = document.getElementById('filter-model').value.trim().toLowerCase();
+
+      const filtered = devicesCache.filter(device => {
+        const serial = (device.serial_number || '').toLowerCase();
+        const model = (device.model || '').toLowerCase();
+        return serial.includes(serialFilter) && model.includes(modelFilter);
+      });
+
+      if (filtered.length === 0) {
+        devicesEl.innerHTML = `
+          <div class="empty-state">
+            Nenhum device encontrado com os filtros atuais.
+          </div>
+        `;
+        return;
+      }
+
+      devicesEl.innerHTML = filtered.map(device => {
+        const isRevealed = revealedSecrets.has(device.id);
+        const secretText = isRevealed ? (device.device_secret || '-') : maskSecret(device.device_secret);
+
+        return `
+          <div class="device-item">
+            <div class="device-row">
+              <div class="device-col">
+                <span>Serial number</span>
+                <strong>${escapeHtml(device.serial_number)}</strong>
+              </div>
+
+              <div class="device-col">
+                <span>Nome</span>
+                <strong>${escapeHtml(device.name || '-')}</strong>
+              </div>
+
+              <div class="device-col">
+                <span>Modelo</span>
+                <strong>${escapeHtml(device.model || '-')}</strong>
+              </div>
+
+              <div class="device-col secret-col">
+                <span>Chave secreta</span>
+                <div class="secret-inline-box">
+                  <div class="secret-value" id="secret-${device.id}">
+                    ${escapeHtml(secretText)}
+                  </div>
+                  <button class="eye-btn" data-id="${escapeHtml(device.id)}" title="${isRevealed ? 'Ocultar chave secreta' : 'Mostrar chave secreta'}" aria-label="${isRevealed ? 'Ocultar chave secreta' : 'Mostrar chave secreta'}">
+                    <img src="img/${isRevealed ? 'eye-closed.png' : 'eye-open.png'}" alt="" />
+                  </button>
+                </div>
+              </div>
+
+              <div class="status-badge ${device.active ? 'active' : 'inactive'}">
+                ${device.active ? 'Ativo' : 'Inativo'}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.eye-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const id = button.dataset.id;
+          if (revealedSecrets.has(id)) {
+            revealedSecrets.delete(id);
+          } else {
+            revealedSecrets.add(id);
+          }
+          renderDevices();
+        });
+      });
+    }
+
+    async function loadDevices() {
+      clearMessage();
+
+      const { data, error } = await supabase
+        .from('devices')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (error) {
+        showMessage('error', `Erro ao carregar devices: ${error.message}`);
+        return;
+      }
+
+      devicesCache = data || [];
+      renderDevices();
+    }
+
+    async function init() {
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error || !data?.session) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      userEmailEl.textContent = data.session.user.email || 'Usuário autenticado';
+      await loadDevices();
+    }
+
+    toggleAddDeviceBtn.addEventListener('click', () => {
+      const isOpen = addDevicePanel.classList.contains('open');
+
+      if (isOpen) {
+        addDevicePanel.classList.remove('open');
+        toggleAddDeviceBtn.textContent = 'Expandir';
+      } else {
+        addDevicePanel.classList.add('open');
+        toggleAddDeviceBtn.textContent = 'Recolher';
+      }
+    });
+
+    document.getElementById('add-device').addEventListener('click', async () => {
+      clearMessage();
+
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError || !userData?.user) {
+        showMessage('error', 'Não foi possível identificar o usuário logado.');
+        return;
+      }
+
+      const serial = document.getElementById('serial').value.trim();
+      const model = document.getElementById('model').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const secret = document.getElementById('secret').value.trim();
+
+      if (!serial || !model || !secret) {
+        showMessage('error', 'Preencha pelo menos número de série, modelo e chave secreta.');
+        return;
+      }
+
+      const payload = {
+        serial_number: serial,
+        model,
+        name,
+        device_secret: secret,
+        owner_user_id: userData.user.id
+      };
+
+      const { error } = await supabase
+        .from('devices')
+        .insert(payload);
+
+      if (error) {
+        showMessage('error', `Erro ao adicionar device: ${error.message}`);
+        return;
+      }
+
+      document.getElementById('serial').value = '';
+      document.getElementById('model').value = '';
+      document.getElementById('name').value = '';
+      document.getElementById('secret').value = '';
+
+      showMessage('success', 'Device adicionado com sucesso.');
+      await loadDevices();
+    });
+
+    document.getElementById('filter-serial').addEventListener('input', renderDevices);
+    document.getElementById('filter-model').addEventListener('input', renderDevices);
+
+    document.getElementById('logout').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = 'index.html';
+    });
+
+    init();
+  </script>
+</body>
+</html>

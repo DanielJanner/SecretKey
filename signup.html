@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastrar usuário</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #dbe3ee;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success-bg: #ecfdf3;
+      --success-text: #166534;
+      --error-bg: #fef2f2;
+      --error-text: #991b1b;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, #e8f0ff 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #eefbf5 0%, transparent 30%),
+        var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto 18px;
+    }
+
+    .logo img {
+      width: 220px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      text-align: center;
+    }
+
+    .subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      height: 46px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: white;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button {
+      width: 100%;
+      height: 46px;
+      border: none;
+      border-radius: 12px;
+      background: var(--primary);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.04s;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    button.secondary:hover {
+      background: #f8fafc;
+    }
+
+    .message {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .message.success {
+      display: block;
+      background: var(--success-bg);
+      color: var(--success-text);
+      border: 1px solid #bbf7d0;
+    }
+
+    .message.error {
+      display: block;
+      background: var(--error-bg);
+      color: var(--error-text);
+      border: 1px solid #fecaca;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .debug {
+      margin-top: 20px;
+      background: #0f172a;
+      color: #dbeafe;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 12px;
+      overflow: auto;
+      max-height: 220px;
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .logo img {
+        width: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <img src="img/SigNow.png" alt="SigNow" />
+    </div>
+
+    <h1>Cadastrar usuário</h1>
+    <p class="subtitle">
+      Crie sua conta para acessar seus devices e configurações.
+    </p>
+
+    <div class="field">
+      <label for="signup-email">Email</label>
+      <input
+        id="signup-email"
+        type="email"
+        placeholder="seuemail@exemplo.com"
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="field">
+      <label for="signup-password">Senha</label>
+      <input
+        id="signup-password"
+        type="password"
+        placeholder="Digite sua senha"
+        autocomplete="new-password"
+      />
+    </div>
+
+    <div class="field">
+      <label for="confirm-password">Confirmar senha</label>
+      <input
+        id="confirm-password"
+        type="password"
+        placeholder="Digite novamente sua senha"
+        autocomplete="new-password"
+      />
+    </div>
+
+    <div class="actions">
+      <button id="btn-signup">Cadastrar</button>
+      <button id="btn-back" class="secondary" type="button">Voltar para login</button>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <pre id="output" class="debug"></pre>
+
+    <div class="footer-note">
+      Cadastro de usuário
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const SUPABASE_URL = 'https://ceewgklatdsnzifgjcmk.supabase.co'
+    const SUPABASE_ANON_KEY = 'sb_publishable__Jeuo_3E3hNHFVyzdm2XdQ_zYjENdsc'
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+    const signupEmail = document.getElementById('signup-email');
+    const signupPassword = document.getElementById('signup-password');
+    const confirmPassword = document.getElementById('confirm-password');
+    const btnSignup = document.getElementById('btn-signup');
+    const btnBack = document.getElementById('btn-back');
+    const messageEl = document.getElementById('message');
+    const output = document.getElementById('output');
+
+    function showDebug(data) {
+      output.textContent = JSON.stringify(data, null, 2);
+    }
+
+    function showMessage(type, text) {
+      messageEl.className = `message ${type}`;
+      messageEl.textContent = text;
+    }
+
+    function clearMessage() {
+      messageEl.className = 'message';
+      messageEl.textContent = '';
+    }
+
+    btnSignup.addEventListener('click', async () => {
+      clearMessage();
+
+      const email = signupEmail.value.trim();
+      const password = signupPassword.value;
+      const confirm = confirmPassword.value;
+
+      if (!email || !password || !confirm) {
+        showMessage('error', 'Preencha todos os campos.');
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage('error', 'A senha deve ter pelo menos 6 caracteres.');
+        return;
+      }
+
+      if (password !== confirm) {
+        showMessage('error', 'A confirmação da senha não confere.');
+        return;
+      }
+
+      btnSignup.disabled = true;
+      btnSignup.textContent = 'Cadastrando...';
+
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password
+        });
+
+        showDebug({ step: 'signUp', data, error });
+
+        if (error) {
+          showMessage('error', `Erro no cadastro: ${error.message}`);
+          return;
+        }
+
+        showMessage(
+          'success',
+          'Cadastro realizado com sucesso. Verifique seu email para confirmar a conta.'
+        );
+
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2000);
+      } catch (err) {
+        showDebug({ step: 'signUp', unexpectedError: String(err) });
+        showMessage('error', 'Ocorreu um erro inesperado no cadastro.');
+      } finally {
+        btnSignup.disabled = false;
+        btnSignup.textContent = 'Cadastrar';
+      }
+    });
+
+    btnBack.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
