@@ -293,7 +293,7 @@
     }
 
     .eye-btn {
-      background: transparent;
+      background: transparent !important;
       border: none;
       cursor: pointer;
       padding: 4px;
@@ -302,22 +302,34 @@
       justify-content: center;
       height: auto;
       min-width: auto;
+      border-radius: 6px;
     }
-
+    
     .eye-btn img {
       width: 18px;
       height: 18px;
-      opacity: 0.72;
+      opacity: 0.65;
       transition: opacity 0.2s, transform 0.1s;
-      display: block;
     }
-
+    
+    /* hover mais suave */
+    .eye-btn:hover {
+      background: transparent;
+    }
+    
     .eye-btn:hover img {
       opacity: 1;
     }
-
+    
+    /* clique */
     .eye-btn:active img {
-      transform: scale(0.95);
+      transform: scale(0.92);
+    }
+    
+    /* remove highlight azul (focus) */
+    .eye-btn:focus {
+      outline: none;
+      box-shadow: none;
     }
 
     .status-badge {
